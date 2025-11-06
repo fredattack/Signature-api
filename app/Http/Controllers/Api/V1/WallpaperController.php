@@ -11,6 +11,7 @@ use App\Http\Requests\Wallpaper\DeleteWallpaperRequest;
 use App\Http\Requests\Wallpaper\GenerateWallpaperRequest;
 use App\Http\Requests\Wallpaper\ListWallpapersRequest;
 use App\Http\Resources\WallpaperResource;
+use App\Models\WallpaperTemplate;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -64,6 +65,22 @@ class WallpaperController extends Controller
         try {
             /** @var array{signature_id: string, template_id: string, resolution?: string} $validated */
             $validated = $request->validated();
+
+            // Check if template is premium and user has access
+            $template = WallpaperTemplate::findOrFail($validated['template_id']);
+            if ($template->is_premium) {
+                /** @var \App\Models\User $user */
+                $user = auth()->user();
+
+                if (! $user->is_premium || ! $user->premium_expires_at || $user->premium_expires_at->isPast()) {
+                    return response()->json([
+                        'message' => 'This template requires a premium subscription.',
+                        'error' => 'PREMIUM_REQUIRED',
+                        'template_id' => $template->id,
+                    ], 403);
+                }
+            }
+
             $wallpaper = $action->execute($validated);
 
             return new WallpaperResource($wallpaper->load(['signature', 'template']));

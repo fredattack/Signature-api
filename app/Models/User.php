@@ -11,6 +11,23 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
+/**
+ * @property string $id
+ * @property string $email
+ * @property string $password_hash
+ * @property string|null $first_name
+ * @property string|null $last_name
+ * @property bool $is_premium
+ * @property \Illuminate\Support\Carbon|null $premium_expires_at
+ * @property bool $mfa_enabled
+ * @property string|null $mfa_secret
+ * @property string|null $locale
+ * @property string|null $timezone
+ * @property string|null $avatar_url
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ */
 class User extends Authenticatable
 {
     use HasFactory, HasRoles, HasUuids, Notifiable, SoftDeletes;

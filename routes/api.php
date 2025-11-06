@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\SignatureController;
+use App\Http\Controllers\Api\V1\SubscriptionController;
 use App\Http\Controllers\Api\V1\WallpaperController;
 use App\Http\Controllers\Api\V1\WallpaperTemplateController;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,14 @@ Route::prefix('v1')->group(function () {
             Route::post('/setup', [AuthController::class, 'setupMfa']);
             Route::post('/verify', [AuthController::class, 'verifyMfa']);
             Route::post('/disable', [AuthController::class, 'disableMfa']);
+        });
+
+        // Subscription Management
+        Route::prefix('subscription')->group(function () {
+            Route::get('/plans', [SubscriptionController::class, 'plans']);
+            Route::get('/status', [SubscriptionController::class, 'status']);
+            Route::get('/', [SubscriptionController::class, 'show']);
+            Route::post('/cancel', [SubscriptionController::class, 'cancel']);
         });
 
         // Signatures Management

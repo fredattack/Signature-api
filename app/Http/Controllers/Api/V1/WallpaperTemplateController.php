@@ -41,6 +41,20 @@ class WallpaperTemplateController extends Controller
             ], 404);
         }
 
+        // Check premium access for premium templates
+        if ($template->is_premium) {
+            /** @var \App\Models\User $user */
+            $user = auth()->user();
+
+            if (! $user->is_premium || ! $user->premium_expires_at || $user->premium_expires_at->isPast()) {
+                return response()->json([
+                    'message' => 'This is a premium template. Upgrade to premium to access it.',
+                    'error' => 'PREMIUM_REQUIRED',
+                    'template_id' => $template->id,
+                ], 403);
+            }
+        }
+
         return new WallpaperTemplateResource($template);
     }
 }
