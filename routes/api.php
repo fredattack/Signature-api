@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\AnalyticsController;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\FeedbackController;
 use App\Http\Controllers\Api\V1\SignatureController;
 use App\Http\Controllers\Api\V1\SubscriptionController;
 use App\Http\Controllers\Api\V1\WallpaperController;
@@ -52,6 +53,13 @@ Route::prefix('v1')->group(function () {
         Route::prefix('analytics')->group(function () {
             Route::get('/stats', [AnalyticsController::class, 'stats']);
             Route::get('/events', [AnalyticsController::class, 'events']);
+        });
+
+        // Feedback & Support
+        Route::prefix('feedback')->group(function () {
+            Route::post('/', [FeedbackController::class, 'store']);
+            Route::get('/', [FeedbackController::class, 'index']);
+            Route::get('/stats', [FeedbackController::class, 'stats']);
         });
 
         // Signatures Management
