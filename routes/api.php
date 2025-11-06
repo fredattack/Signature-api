@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\AnalyticsController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\SignatureController;
 use App\Http\Controllers\Api\V1\SubscriptionController;
@@ -45,6 +46,12 @@ Route::prefix('v1')->group(function () {
             Route::get('/status', [SubscriptionController::class, 'status']);
             Route::get('/', [SubscriptionController::class, 'show']);
             Route::post('/cancel', [SubscriptionController::class, 'cancel']);
+        });
+
+        // Analytics & User Stats
+        Route::prefix('analytics')->group(function () {
+            Route::get('/stats', [AnalyticsController::class, 'stats']);
+            Route::get('/events', [AnalyticsController::class, 'events']);
         });
 
         // Signatures Management

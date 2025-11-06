@@ -7,6 +7,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property string $id
+ * @property string|null $user_id
+ * @property string $event_type
+ * @property array<string, mixed>|null $event_data
+ * @property string|null $ip_address
+ * @property string|null $user_agent
+ * @property \Illuminate\Support\Carbon $created_at
+ */
 class AnalyticsEvent extends Model
 {
     use HasFactory, HasUuids;
