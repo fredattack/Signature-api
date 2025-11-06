@@ -13,3 +13,4 @@ parameters:
         - '#should return .* but returns .*\$this\(#'
         - '#Generic type .* in PHPDoc tag @return does not specify all template types#'
         - '#Cannot call method toIso8601String\(\) on string#'
+        - '#return type with generic class .* does not specify its types: TKey, TValue#'

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\SignatureController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +34,15 @@ Route::prefix('v1')->group(function () {
             Route::post('/setup', [AuthController::class, 'setupMfa']);
             Route::post('/verify', [AuthController::class, 'verifyMfa']);
             Route::post('/disable', [AuthController::class, 'disableMfa']);
+        });
+
+        // Signatures Management
+        Route::prefix('signatures')->group(function () {
+            Route::get('/', [SignatureController::class, 'index']);
+            Route::post('/', [SignatureController::class, 'store']);
+            Route::get('/{id}', [SignatureController::class, 'show']);
+            Route::post('/{id}', [SignatureController::class, 'update']); // POST for file upload support
+            Route::delete('/{id}', [SignatureController::class, 'destroy']);
         });
     });
 });
