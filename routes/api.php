@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\SignatureController;
+use App\Http\Controllers\Api\V1\WallpaperController;
+use App\Http\Controllers\Api\V1\WallpaperTemplateController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,6 +45,20 @@ Route::prefix('v1')->group(function () {
             Route::get('/{id}', [SignatureController::class, 'show']);
             Route::post('/{id}', [SignatureController::class, 'update']); // POST for file upload support
             Route::delete('/{id}', [SignatureController::class, 'destroy']);
+        });
+
+        // Wallpaper Templates (Browse)
+        Route::prefix('wallpaper-templates')->group(function () {
+            Route::get('/', [WallpaperTemplateController::class, 'index']);
+            Route::get('/{id}', [WallpaperTemplateController::class, 'show']);
+        });
+
+        // Wallpapers Management
+        Route::prefix('wallpapers')->group(function () {
+            Route::get('/', [WallpaperController::class, 'index']);
+            Route::post('/', [WallpaperController::class, 'store']); // Generate wallpaper
+            Route::get('/{id}', [WallpaperController::class, 'show']);
+            Route::delete('/{id}', [WallpaperController::class, 'destroy']);
         });
     });
 });
